@@ -1,0 +1,48 @@
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution {
+  public:
+    int maxPathSum(vector<int> &a, vector<int> &b) {
+       int si=0,sj=0,res=0,i=0,j=0;
+       int n=a.size();
+       int m=b.size();
+       
+       while(i<n && j<m){
+           if(a[i]<b[j]){
+               si=si+a[i];
+               i++;
+           }
+           else if(b[j]<a[i]){
+               sj+=b[j];
+               j++;
+           }
+           else
+           {
+               si+=a[i];
+               sj+=b[j];
+               res=res+max(si,sj);
+               si=0;
+               sj=0;
+               i++;
+               j++;
+           }
+       }
+       
+       while(i<n){
+           si+=a[i];
+           i++;
+       }
+       while(j<m){
+           sj+=b[j];
+           j++;
+       }
+       
+      res=res+max(si,sj);
+      return res;
+       
+    }
+};
