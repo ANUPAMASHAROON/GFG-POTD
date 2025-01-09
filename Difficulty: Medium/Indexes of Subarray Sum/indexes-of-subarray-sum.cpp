@@ -7,19 +7,30 @@ using namespace std;
 class Solution {
   public:
     vector<int> subarraySum(vector<int> &arr, int target) {
-        for(int i=0;i<arr.size();i++)
-        {
-            int sum=0;
-           // sum=arr[i];
-            for(int j=i;j<arr.size();j++)
-            {
-               sum+=arr[j] ;
-               if(sum==target)
-               return{i+1,j+1};
-               else if(sum>target)
-               break;
-            }
+        // code here
+        unordered_map<int, pair<int,int>> mp;
+        int n = arr.size();
+        
+        vector<int> pref(n, 0);
+        pref[0] = arr[0];
+        
+        for (int i=1; i<n; i++) {
+            pref[i] = pref[i-1] + arr[i];
         }
+        
+        for (int i=0; i<n; i++) {
+            if (pref[i] == target) {
+                return {1, i+1};
+            }
+            
+            if (mp.find(pref[i] - target) != mp.end()) {
+                return {mp[pref[i]-target].second+1, i+1};
+            }
+            
+            mp[pref[i]].first++;
+            mp[pref[i]].second = i+1;
+        }
+        
         return {-1};
     }
 };
@@ -29,13 +40,13 @@ class Solution {
 int main() {
     int t;
     cin >> t;
-    cin.ignore(); // Ignore the newline character after t
+    cin.ignore();
     while (t--) {
         vector<int> arr;
         int d;
         string input;
 
-        getline(cin, input); // Read the entire line for the array elements
+        getline(cin, input);
         stringstream ss(input);
         int number;
         while (ss >> number) {
@@ -43,7 +54,7 @@ int main() {
         }
 
         cin >> d;
-        cin.ignore(); // Ignore the newline character after d
+        cin.ignore();
 
         Solution ob;
         vector<int> result = ob.subarraySum(arr, d);
