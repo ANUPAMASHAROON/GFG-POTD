@@ -1,54 +1,60 @@
 //{ Driver Code Starts
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 
 // } Driver Code Ends
 
-class Solution
-{
-    public:
-    bool ispar(string x)
-    {
-         stack<char> s;
-    
-        for(char c : x) {
-            if(c == '{' || c == '(' || c == '[') {
-                s.push(c);
-            } else {
-                if(s.empty()) {
+class Solution {
+  public:
+    bool isBalanced(string& s) {
+        stack<char> st;
+        int l = s.size();
+        
+        for(int i=0;i<l;i++){
+            if(s[i] == ')' || s[i] == '}' || s[i] ==']' ){
+                if(st.empty()) 
                     return false;
-                }
+                    
+                char t = st.top();
                 
-                char t = s.top();
-                
-                if((c == '}' && t == '{') || (c == ']' && t == '[') || (c == ')' && t == '(')) {
-                    s.pop(); 
-                } else {
+                if(t == '(' && s[i] ==')') 
+                    st.pop();
+                else if(t == '{' && s[i] =='}') 
+                    st.pop();
+                else if(t == '[' && s[i] ==']') 
+                    st.pop();
+                else
                     return false;
-                }
             }
+            else{
+                st.push(s[i]);
+            }
+            
         }
         
-        return s.empty();
+        if(!st.empty()) return false;
+        
+        return true;
     }
 };
 
 //{ Driver Code Starts.
 
-int main()
-{
-   int t;
-   string a;
-   cin>>t;
-   while(t--)
-   {
-       cin>>a;
-       Solution obj;
-       if(obj.ispar(a))
-        cout<<"balanced"<<endl;
-       else
-        cout<<"not balanced"<<endl;
-   }
+int main() {
+    int t;
+    string a;
+    cin >> t;
+    while (t--) {
+        cin >> a;
+        Solution obj;
+        if (obj.isBalanced(a))
+            cout << "true" << endl;
+        else
+            cout << "false" << endl;
+
+        cout << "~"
+             << "\n";
+    }
 }
 // } Driver Code Ends
