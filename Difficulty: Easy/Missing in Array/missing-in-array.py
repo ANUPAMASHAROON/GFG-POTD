@@ -1,11 +1,9 @@
-#User function Template for python3
 class Solution:
-    
-    # Note that the size of the array is n-1
-    def missingNumber(self, n, arr):
-        return n*(n+1)//2-sum(arr)
-        
+    def missingNum(self, arr):
         # code here
+        n = max(arr)
+        ans = ((n*(n+1))//2) - sum(arr)
+        return ans if ans else n+1
 
 
 #{ 
@@ -14,9 +12,9 @@ class Solution:
 
 t = int(input())
 for _ in range(0, t):
-    n = int(input())
     arr = list(map(int, input().split()))
-    s = Solution().missingNumber(n, arr)
+    s = Solution().missingNum(arr)
     print(s)
 
+    print("~")
 # } Driver Code Ends
