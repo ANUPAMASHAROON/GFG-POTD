@@ -6,49 +6,32 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 // User function template for C++
 
 class Solution {
   public:
     int majorityElement(vector<int>& arr) {
-
-        // your code here
-         int candidate=-1;
-        int votes=0;
-        int count=0;
-        for(int i=0;i<arr.size();i++)
-        {
-            if(votes==0)
-            {
-                candidate=arr[i];
-                votes=1;
+        // code here
+        int cnt = 0, ans = -1;
+        for(int i = 0; i < arr.size(); i++) {
+            if(cnt == 0) {
+                ans = arr[i];
+                cnt = 1;
             }
-            else
-            {
-                if(arr[i]==candidate)
-                {
-                    votes++;
-                }
-                else
-                {
-                    votes--;
-                }
-            }
+            else if(arr[i] == ans) cnt++;
+            else 
+                cnt--;
         }
-        for(int i=0;i<arr.size();i++)
-        {
-            if(arr[i]==candidate)
-            {
-                count++;
-            }
+        cnt = 0;
+        for(int i = 0; i < arr.size(); i++) {
+            if(arr[i] == ans) cnt++;
         }
-        if(count>arr.size()/2)
-        {
-            return candidate;
-        }
+        if(cnt > arr.size()/2) return ans;
         return -1;
     }
 };
+
 
 //{ Driver Code Starts.
 
@@ -69,6 +52,7 @@ int main() {
 
         Solution obj;
         cout << obj.majorityElement(a) << endl;
+        cout << "~" << endl;
     }
 
     return 0;
